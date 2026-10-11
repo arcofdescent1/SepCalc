@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#07110e">
+  <meta name="description" content="See how an inspectable SepCalc worksheet compares two mortgage offers, including fees, payment timing, and break-even time.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Compare two loan offers without hiding the assumptions">
+  <meta property="og:description" content="A worked SepCalc example with source values, conventions, deterministic calculations, and a reusable worksheet.">
+  <meta property="og:url" content="https://sepcalc.app/loan-comparison.html">
+  <link rel="canonical" href="https://sepcalc.app/loan-comparison.html">
+  <title>Compare Two Loan Offers — SepCalc</title>
+  <style>
+    :root{--bg:#07110e;--panel:#101b18;--panel2:#14231f;--text:#f5faf8;--muted:#a6b7b1;--mint:#86e8c3;--line:#29413a;--warn:#ffd98a}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 82% -10%,#1e5844 0,transparent 34rem),var(--bg);color:var(--text);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit}.wrap{width:min(940px,calc(100% - 36px));margin:auto}header{display:flex;align-items:center;justify-content:space-between;padding:24px 0}.brand{text-decoration:none;font-size:21px;font-weight:850}.store{text-decoration:none;color:var(--mint);font-weight:750}.hero{padding:72px 0 44px}.eyebrow{color:var(--mint);font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}h1{max-width:800px;margin:14px 0 20px;font-size:clamp(42px,7vw,72px);line-height:1;letter-spacing:-.05em}.lead{max-width:750px;margin:0;color:#c0cec9;font-size:clamp(19px,2.6vw,24px)}.model{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:38px 0}.offer{padding:25px;border:1px solid var(--line);border-radius:22px;background:var(--panel)}.offer h2{margin:0 0 18px}.row{display:flex;justify-content:space-between;gap:20px;padding:9px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}.row span{color:var(--muted)}.result{margin:18px 0 54px;padding:30px;border:1px solid #4f967e;border-radius:24px;background:var(--panel2)}.result h2{margin:0 0 14px;font-size:28px}.result strong{color:var(--mint)}.note{color:var(--warn)}.steps{display:grid;gap:16px;margin-bottom:58px}.step{padding:22px;border-left:3px solid var(--mint);background:#ffffff08}.step h2{margin:0 0 6px;font-size:20px}.step p{margin:0;color:var(--muted)}.cta{margin:62px 0;padding:clamp(28px,6vw,52px);text-align:center;border:1px solid var(--line);border-radius:28px;background:var(--panel)}.cta h2{margin:0 0 10px;font-size:clamp(30px,5vw,45px);letter-spacing:-.035em}.cta p{margin:0;color:var(--muted)}.button{display:inline-flex;align-items:center;justify-content:center;min-height:54px;margin-top:24px;padding:0 23px;border-radius:15px;background:var(--mint);color:#06110d;text-decoration:none;font-weight:850}footer{display:flex;justify-content:space-between;gap:18px;padding:26px 0 42px;color:var(--muted);font-size:14px}footer nav{display:flex;gap:16px}footer a{text-decoration:none}a:focus-visible{outline:3px solid var(--mint);outline-offset:4px}@media(max-width:650px){.model{grid-template-columns:1fr}footer{display:grid}}@media(prefers-color-scheme:light){:root{--bg:#f4f8f6;--panel:#fff;--panel2:#e9f5f0;--text:#101814;--muted:#58665f;--line:#c9ddd4;--warn:#815500}body{background:radial-gradient(circle at 82% -10%,#ccefe1 0,transparent 34rem),var(--bg)}.lead{color:#3e5149}.step{background:#0c1a1508}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a class="brand" href="index.html">SepCalc</a>
+    <a class="store" href="https://apps.apple.com/us/app/sepcalc/id6804912244">View on the App Store</a>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Worked example · Finance</div>
+      <h1>Compare two loan offers without hiding the assumptions.</h1>
+      <p class="lead">A lower rate can still take years to recover its upfront fee. SepCalc keeps the source values, timing convention, deterministic calculation, and reusable worksheet together.</p>
+    </section>
+
+    <section class="model" aria-label="Loan offers">
+      <article class="offer">
+        <h2>Offer A</h2>
+        <div class="row"><span>Principal</span><strong>$300,000</strong></div>
+        <div class="row"><span>APR</span><strong>6.25%</strong></div>
+        <div class="row"><span>Term</span><strong>30 years</strong></div>
+        <div class="row"><span>Upfront fee</span><strong>$6,000</strong></div>
+        <div class="row"><span>Monthly payment</span><strong>$1,847.15</strong></div>
+      </article>
+      <article class="offer">
+        <h2>Offer B</h2>
+        <div class="row"><span>Principal</span><strong>$300,000</strong></div>
+        <div class="row"><span>APR</span><strong>6.50%</strong></div>
+        <div class="row"><span>Term</span><strong>30 years</strong></div>
+        <div class="row"><span>Upfront fee</span><strong>$0</strong></div>
+        <div class="row"><span>Monthly payment</span><strong>$1,896.20</strong></div>
+      </article>
+    </section>
+
+    <section class="result">
+      <h2>What the worksheet reveals</h2>
+      <p>Offer A saves <strong>$49.05 per month</strong>. Recovering its additional $6,000 upfront fee takes about <strong>122.3 months</strong>, or <strong>10.2 years</strong>.</p>
+      <p class="note">This break-even comparison excludes taxes, insurance, points with different tax treatment, refinancing, early payoff, and the time value of the upfront fee. Those inputs materially change the decision and belong in the worksheet when applicable.</p>
+    </section>
+
+    <section class="steps" aria-label="How SepCalc models the comparison">
+      <article class="step"><h2>1. Preserve the offer terms</h2><p>Principal, APR, term, fees, payment frequency, and timing remain editable source values instead of disappearing into a one-line answer.</p></article>
+      <article class="step"><h2>2. Calculate with the finance engine</h2><p>Each monthly payment uses the stated nominal annual rate divided into 12 monthly periods over 360 payments.</p></article>
+      <article class="step"><h2>3. Compare the decision horizon</h2><p>The model shows the payment delta and the time needed for monthly savings to recover the fee difference.</p></article>
+      <article class="step"><h2>4. Reuse the model</h2><p>Replace the example values with the actual offers, then preserve the resulting worksheet and assumptions for later review.</p></article>
+    </section>
+
+    <section class="cta">
+      <h2>Put your own offers into the model.</h2>
+      <p>Download SepCalc for iPhone and iPad and keep the calculation inspectable.</p>
+      <a class="button" href="https://apps.apple.com/us/app/sepcalc/id6804912244">Download SepCalc</a>
+    </section>
+  </main>
+  <footer class="wrap">
+    <span>© 2026 SepCalc</span>
+    <nav aria-label="Legal and support"><a href="support.html">Support</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+  </footer>
+</body>
+</html>
